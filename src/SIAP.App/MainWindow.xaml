@@ -1,0 +1,8 @@
+<Window x:Class="SIAP.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIAP" Height="450" Width="800">
+  <Grid>
+    <TextBlock Text="SIAP Foundation" HorizontalAlignment="Center" VerticalAlignment="Center" />
+  </Grid>
+</Window>
