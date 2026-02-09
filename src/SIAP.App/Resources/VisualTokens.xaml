@@ -1,105 +1,81 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
-
-  <!-- =================================================
-       SIAP — VISUAL TOKEN REGISTRY (WPF)
-       Token-driven only. No hardcoded styling in views.
-       ================================================= -->
-
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <!-- Color Tokens -->
   <Color x:Key="TokenColorBackgroundPrimary">#1E1E1E</Color>
   <Color x:Key="TokenColorBackgroundSecondary">#252526</Color>
   <Color x:Key="TokenColorBackgroundElevated">#2D2D30</Color>
-
   <Color x:Key="TokenColorBorderStandard">#3C3C3C</Color>
-
   <Color x:Key="TokenColorTextPrimary">#D4D4D4</Color>
   <Color x:Key="TokenColorTextSecondary">#9DA5B4</Color>
-
   <Color x:Key="TokenColorAccentPrimary">#007ACC</Color>
   <Color x:Key="TokenColorAccentPrimaryDark">#0063A8</Color>
-
   <Color x:Key="TokenColorAccentSuccess">#89D185</Color>
   <Color x:Key="TokenColorAccentWarning">#CCA700</Color>
-
   <Color x:Key="TokenColorAccentError">#F14C4C</Color>
   <Color x:Key="TokenColorAccentErrorDark">#D83B3B</Color>
-
   <Color x:Key="TokenColorAccentSelection">#094771</Color>
 
-  <!-- Numeric Tokens (MUST use sys:Double) -->
-  <sys:Double x:Key="TokenSpacingMicro">4</sys:Double>
-  <sys:Double x:Key="TokenSpacingSmall">8</sys:Double>
-  <sys:Double x:Key="TokenSpacingStandard">12</sys:Double>
-  <sys:Double x:Key="TokenSpacingLarge">16</sys:Double>
-
-  <sys:Double x:Key="TokenOpacityDisabled">0.55</sys:Double>
-  <sys:Double x:Key="TokenOpacityHover">0.85</sys:Double>
-  <sys:Double x:Key="TokenOpacityPressed">0.75</sys:Double>
-
-  <sys:Double x:Key="TokenSplitterWidth">8</sys:Double>
-  <sys:Double x:Key="TokenMinPaneWidth">260</sys:Double>
+  <!-- Spacing Tokens -->
+  <Double x:Key="TokenSpacingMicro">4</Double>
+  <Double x:Key="TokenSpacingSmall">8</Double>
+  <Double x:Key="TokenSpacingStandard">12</Double>
+  <Double x:Key="TokenSpacingLarge">16</Double>
+  <Double x:Key="TokenOpacityDisabled">0.55</Double>
+  <Double x:Key="TokenOpacityHover">0.85</Double>
+  <Double x:Key="TokenOpacityPressed">0.75</Double>
+  <Double x:Key="TokenSplitterWidth">8</Double>
+  <Double x:Key="TokenMinPaneWidth">260</Double>
+  <Double x:Key="TokenTreeItemHeight">28</Double>
+  <Double x:Key="TokenTreeIconSize">12</Double>
 
   <!-- Brush Tokens -->
   <SolidColorBrush x:Key="TokenBrushBackgroundPrimary" Color="{StaticResource TokenColorBackgroundPrimary}" />
   <SolidColorBrush x:Key="TokenBrushBackgroundSecondary" Color="{StaticResource TokenColorBackgroundSecondary}" />
   <SolidColorBrush x:Key="TokenBrushBackgroundElevated" Color="{StaticResource TokenColorBackgroundElevated}" />
-
   <SolidColorBrush x:Key="TokenBrushBorderStandard" Color="{StaticResource TokenColorBorderStandard}" />
-
   <SolidColorBrush x:Key="TokenBrushTextPrimary" Color="{StaticResource TokenColorTextPrimary}" />
   <SolidColorBrush x:Key="TokenBrushTextSecondary" Color="{StaticResource TokenColorTextSecondary}" />
-
   <SolidColorBrush x:Key="TokenBrushAccentPrimary" Color="{StaticResource TokenColorAccentPrimary}" />
   <SolidColorBrush x:Key="TokenBrushAccentSuccess" Color="{StaticResource TokenColorAccentSuccess}" />
   <SolidColorBrush x:Key="TokenBrushAccentWarning" Color="{StaticResource TokenColorAccentWarning}" />
   <SolidColorBrush x:Key="TokenBrushAccentError" Color="{StaticResource TokenColorAccentError}" />
   <SolidColorBrush x:Key="TokenBrushAccentSelection" Color="{StaticResource TokenColorAccentSelection}" />
-
-  <SolidColorBrush x:Key="TokenBrushTextDisabled"
-                   Color="{StaticResource TokenColorTextPrimary}"
-                   Opacity="{StaticResource TokenOpacityDisabled}" />
-
+  <SolidColorBrush x:Key="TokenBrushTextDisabled" Color="{StaticResource TokenColorTextPrimary}" Opacity="{StaticResource TokenOpacityDisabled}" />
   <SolidColorBrush x:Key="TokenBrushSplitter" Color="{StaticResource TokenColorBorderStandard}" />
-  <SolidColorBrush x:Key="TokenBrushSplitterHover"
-                   Color="{StaticResource TokenColorAccentSelection}"
-                   Opacity="{StaticResource TokenOpacityHover}" />
+  <SolidColorBrush x:Key="TokenBrushSplitterHover" Color="{StaticResource TokenColorAccentSelection}" Opacity="{StaticResource TokenOpacityHover}" />
+  <SolidColorBrush x:Key="TokenBrushTreeItemHover" Color="{StaticResource TokenColorBackgroundElevated}" />
+  <SolidColorBrush x:Key="TokenBrushTreeItemSelected" Color="{StaticResource TokenColorAccentSelection}" />
 
-  <!-- Thickness Tokens -->
   <Thickness x:Key="TokenThicknessMicro">4</Thickness>
   <Thickness x:Key="TokenThicknessSmall">8</Thickness>
   <Thickness x:Key="TokenThicknessStandard">12</Thickness>
   <Thickness x:Key="TokenThicknessLarge">16</Thickness>
-
   <Thickness x:Key="TokenThicknessContainer">16</Thickness>
   <Thickness x:Key="TokenThicknessButtonPadding">8,4</Thickness>
   <Thickness x:Key="TokenThicknessButtonMargin">0,0,8,0</Thickness>
-
   <Thickness x:Key="TokenThicknessRowGap">0,0,0,12</Thickness>
   <Thickness x:Key="TokenThicknessColumnGap">0,0,12,0</Thickness>
-
   <Thickness x:Key="TokenThicknessHeaderPadding">12</Thickness>
   <Thickness x:Key="TokenThicknessPanelPadding">12</Thickness>
   <Thickness x:Key="TokenThicknessPanelMargin">0</Thickness>
-
   <Thickness x:Key="TokenThicknessTopMicro">0,4,0,0</Thickness>
   <Thickness x:Key="TokenThicknessTopSmall">0,8,0,0</Thickness>
   <Thickness x:Key="TokenThicknessTopStandard">0,12,0,0</Thickness>
-
   <Thickness x:Key="TokenThicknessFooterLabel">16,4,0,0</Thickness>
   <Thickness x:Key="TokenThicknessFooterValue">6,4,16,0</Thickness>
   <Thickness x:Key="TokenThicknessFooterLabelTight">0,4,0,0</Thickness>
   <Thickness x:Key="TokenThicknessFooterValueTight">6,4,0,0</Thickness>
+  <Thickness x:Key="TokenThicknessTreeItemPadding">6,2,6,2</Thickness>
+  <Thickness x:Key="TokenThicknessTreeItemMargin">2,1,2,1</Thickness>
+  <Thickness x:Key="TokenThicknessTreeIndent">16,0,0,0</Thickness>
 
   <!-- Typography Tokens -->
   <FontFamily x:Key="TokenFontPrimary">Segoe UI</FontFamily>
   <FontFamily x:Key="TokenFontMonospace">Consolas</FontFamily>
-
+  <FontFamily x:Key="TokenFontIcon">Segoe MDL2 Assets</FontFamily>
   <FontWeight x:Key="TokenFontWeightHeader">SemiBold</FontWeight>
   <FontWeight x:Key="TokenFontWeightStandard">Normal</FontWeight>
-
-  <sys:Double x:Key="TokenFontSizeSmall">11</sys:Double>
+  <Double x:Key="TokenFontSizeSmall">11</Double>
 
   <!-- Motion Tokens -->
   <Duration x:Key="TokenMotionHover">0:0:0.1</Duration>
@@ -109,8 +85,9 @@
 
   <!-- Border Tokens -->
   <CornerRadius x:Key="TokenCornerRadiusCard">6</CornerRadius>
-  <CornerRadius x:Key="TokenCornerRadiusButton">6</CornerRadius>
+  <CornerRadius x:Key="TokenCornerRadiusButton">4</CornerRadius>
   <CornerRadius x:Key="TokenCornerRadiusPanel">4</CornerRadius>
+  <CornerRadius x:Key="TokenCornerRadiusTreeItem">4</CornerRadius>
   <Thickness x:Key="TokenBorderThicknessStandard">1</Thickness>
 
   <!-- Gradient Tokens -->
@@ -118,20 +95,16 @@
     <GradientStop Color="{StaticResource TokenColorBackgroundSecondary}" Offset="0" />
     <GradientStop Color="{StaticResource TokenColorBackgroundElevated}" Offset="1" />
   </LinearGradientBrush>
-
   <LinearGradientBrush x:Key="TokenBrushGradientPrimaryAction" StartPoint="0,0" EndPoint="0,1">
     <GradientStop Color="{StaticResource TokenColorAccentPrimary}" Offset="0" />
     <GradientStop Color="{StaticResource TokenColorAccentPrimaryDark}" Offset="1" />
   </LinearGradientBrush>
-
   <LinearGradientBrush x:Key="TokenBrushGradientSecondaryAction" StartPoint="0,0" EndPoint="0,1">
     <GradientStop Color="{StaticResource TokenColorBackgroundSecondary}" Offset="0" />
     <GradientStop Color="{StaticResource TokenColorBackgroundElevated}" Offset="1" />
   </LinearGradientBrush>
-
   <LinearGradientBrush x:Key="TokenBrushGradientDangerAction" StartPoint="0,0" EndPoint="0,1">
     <GradientStop Color="{StaticResource TokenColorAccentError}" Offset="0" />
     <GradientStop Color="{StaticResource TokenColorAccentErrorDark}" Offset="1" />
   </LinearGradientBrush>
-
 </ResourceDictionary>

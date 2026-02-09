@@ -65,23 +65,30 @@
                 Margin="{DynamicResource TokenThicknessPanelMargin}"
                 Style="{StaticResource SIAP.Panel}">
         <TreeView x:Name="ExplorerTree"
-                  ItemsSource="{Binding RootNodes}">
+                  ItemsSource="{Binding RootNodes}"
+                  ItemContainerStyle="{StaticResource SIAP.TreeItem}">
           <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Children}">
               <StackPanel Orientation="Horizontal">
                 <CheckBox IsThreeState="True"
                           IsChecked="{Binding IsChecked, Mode=TwoWay}" />
                 <TextBlock Text=" " Width="{DynamicResource TokenSpacingMicro}" />
-                <TextBlock x:Name="NodeIcon" Text="F" Foreground="{DynamicResource TokenBrushAccentPrimary}" />
+                <TextBlock x:Name="NodeIcon"
+                           FontFamily="{DynamicResource TokenFontIcon}"
+                           FontSize="{DynamicResource TokenTreeIconSize}"
+                           Foreground="{DynamicResource TokenBrushTextSecondary}"
+                           Text="&#xE8A5;" />
                 <TextBlock Text=" " Width="{DynamicResource TokenSpacingMicro}" />
                 <TextBlock Text="{Binding Name}" />
               </StackPanel>
               <HierarchicalDataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsFolder}" Value="True">
-                  <Setter TargetName="NodeIcon" Property="Text" Value="📁" />
+                  <Setter TargetName="NodeIcon" Property="Text" Value="&#xE8B7;" />
+                  <Setter TargetName="NodeIcon" Property="Foreground" Value="{DynamicResource TokenBrushAccentPrimary}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsFolder}" Value="False">
-                  <Setter TargetName="NodeIcon" Property="Text" Value="📄" />
+                  <Setter TargetName="NodeIcon" Property="Text" Value="&#xE8A5;" />
+                  <Setter TargetName="NodeIcon" Property="Foreground" Value="{DynamicResource TokenBrushTextSecondary}" />
                 </DataTrigger>
               </HierarchicalDataTemplate.Triggers>
             </HierarchicalDataTemplate>
