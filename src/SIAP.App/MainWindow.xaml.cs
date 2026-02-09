@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -14,10 +17,14 @@ public partial class MainWindow : Window
     private readonly ProjectScanner _scanner = new();
     private readonly StructuralValidator _validator = new();
     private readonly ExportService _exporter = new();
+    private readonly Dictionary<TreeNode, PropertyChangedEventHandler> _nodeHandlers = new();
+
+    public ObservableCollection<TreeNode> RootNodes { get; } = new();
 
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this;
     }
 
     private void OnOpenProjectClicked(object sender, RoutedEventArgs e)
@@ -36,9 +43,12 @@ public partial class MainWindow : Window
         {
             Log($"Scanning: {dialog.SelectedPath}");
             _snapshot = _scanner.Scan(dialog.SelectedPath);
-            FilesListBox.ItemsSource = _snapshot.Files.Select(file => file.RelativePath).ToList();
+            BuildTreeFromSnapshot(_snapshot);
+            ProjectNameText.Text = Path.GetFileName(_snapshot.RootPath);
+            ProjectPathText.Text = _snapshot.RootPath;
             FileCountText.Text = _snapshot.Files.Count.ToString("N0");
             TotalSizeText.Text = _snapshot.Files.Sum(file => file.SizeBytes).ToString("N0");
+            SelectionSummaryText.Text = "Selected: 0 items";
             GenerateExportButton.IsEnabled = true;
             Log($"Scan complete. {_snapshot.Files.Count:N0} files found.");
         }
@@ -93,6 +103,27 @@ public partial class MainWindow : Window
         }
     }
 
+    private void OnSelectAllClicked(object sender, RoutedEventArgs e)
+    {
+        Log("Select All action pending implementation.");
+    }
+
+    private void OnClearSelectionClicked(object sender, RoutedEventArgs e)
+    {
+        Log("Clear selection action pending implementation.");
+    }
+
+    private void OnRescanClicked(object sender, RoutedEventArgs e)
+    {
+        Log("Rescan action pending implementation.");
+    }
+
+    private void OnClearFilterClicked(object sender, RoutedEventArgs e)
+    {
+        FilterTextBox.Text = string.Empty;
+        Log("Filter cleared (filtering pending implementation).");
+    }
+
     private void Log(string message)
     {
         var builder = new StringBuilder(LogTextBox.Text);
@@ -104,5 +135,95 @@ public partial class MainWindow : Window
         builder.Append($"[{DateTime.Now:HH:mm:ss}] {message}");
         LogTextBox.Text = builder.ToString();
         LogTextBox.ScrollToEnd();
+    }
+
+    private void BuildTreeFromSnapshot(ProjectSnapshot snapshot)
+    {
+        RootNodes.Clear();
+        DetachNodeHandlers();
+
+        var rootNode = new TreeNode(Path.GetFileName(snapshot.RootPath), string.Empty, true, null);
+        var folders = new Dictionary<string, TreeNode>(StringComparer.OrdinalIgnoreCase)
+        {
+            [string.Empty] = rootNode
+        };
+
+        foreach (var file in snapshot.Files)
+        {
+            var parts = file.RelativePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            var currentPath = string.Empty;
+            var currentNode = rootNode;
+
+            for (var index = 0; index < parts.Length; index++)
+            {
+                var part = parts[index];
+                var isLast = index == parts.Length - 1;
+
+                if (!isLast)
+                {
+                    currentPath = Path.Combine(currentPath, part);
+                    if (!folders.TryGetValue(currentPath, out var folderNode))
+                    {
+                        folderNode = new TreeNode(part, currentPath, true, currentNode);
+                        folders[currentPath] = folderNode;
+                        currentNode.Children.Add(folderNode);
+                    }
+
+                    currentNode = folderNode;
+                }
+                else
+                {
+                    var fileNode = new TreeNode(part, file.RelativePath, false, currentNode);
+                    currentNode.Children.Add(fileNode);
+                }
+            }
+        }
+
+        SortTree(rootNode);
+        AttachNodeHandlers(rootNode);
+        RootNodes.Add(rootNode);
+    }
+
+    private void SortTree(TreeNode node)
+    {
+        var sorted = node.Children
+            .OrderBy(child => child.IsFolder ? 0 : 1)
+            .ThenBy(child => child.Name, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        node.Children = new ObservableCollection<TreeNode>(sorted);
+
+        foreach (var child in node.Children)
+        {
+            SortTree(child);
+        }
+    }
+
+    private void AttachNodeHandlers(TreeNode node)
+    {
+        PropertyChangedEventHandler handler = (_, args) =>
+        {
+            if (args.PropertyName == nameof(TreeNode.IsChecked))
+            {
+                Log($"Selection changed: {node.RelativePath} => {node.IsChecked}");
+            }
+        };
+
+        node.PropertyChanged += handler;
+        _nodeHandlers[node] = handler;
+
+        foreach (var child in node.Children)
+        {
+            AttachNodeHandlers(child);
+        }
+    }
+
+    private void DetachNodeHandlers()
+    {
+        foreach (var entry in _nodeHandlers)
+        {
+            entry.Key.PropertyChanged -= entry.Value;
+        }
+
+        _nodeHandlers.Clear();
     }
 }
