@@ -3,5 +3,223 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
   <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Resources/VisualTokens.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+      </Style>
+      <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushBackgroundSecondary}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+        <Setter Property="Padding" Value="{DynamicResource TokenThicknessMicro}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource TokenBrushAccentSelection}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource TokenBrushTextPrimary}" />
+      </Style>
+      <Style TargetType="TreeView">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushBackgroundSecondary}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+      </Style>
+      <Style TargetType="ScrollBar">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushBackgroundSecondary}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextSecondary}" />
+      </Style>
+      <Style x:Key="SIAP.Splitter" TargetType="GridSplitter">
+        <Setter Property="Width" Value="{DynamicResource TokenSplitterWidth}" />
+        <Setter Property="Background" Value="{DynamicResource TokenBrushSplitter}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="ResizeDirection" Value="Columns" />
+        <Setter Property="ResizeBehavior" Value="PreviousAndNext" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="ShowsPreview" Value="False" />
+        <Style.Triggers>
+          <Trigger Property="IsMouseOver" Value="True">
+            <Setter Property="Background" Value="{DynamicResource TokenBrushSplitterHover}" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+
+      <Style x:Key="SIAP.TreeItem" TargetType="TreeViewItem">
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="{DynamicResource TokenThicknessTreeItemMargin}" />
+        <Setter Property="Padding" Value="{DynamicResource TokenThicknessTreeItemPadding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TokenTreeItemHeight}" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="TreeViewItem">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border x:Name="ItemBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{DynamicResource TokenCornerRadiusTreeItem}">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton x:Name="Expander"
+                                  Grid.Column="0"
+                                  IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ClickMode="Press"
+                                  Focusable="False"
+                                  Width="{DynamicResource TokenTreeItemHeight}"
+                                  Height="{DynamicResource TokenTreeItemHeight}"
+                                  Background="Transparent"
+                                  BorderThickness="0">
+                      <TextBlock x:Name="ExpanderGlyph"
+                                 Text="▶"
+                                 FontSize="{DynamicResource TokenFontSizeSmall}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 Foreground="{DynamicResource TokenBrushTextSecondary}" />
+                    </ToggleButton>
+                    <ContentPresenter Grid.Column="1"
+                                      ContentSource="Header"
+                                      VerticalAlignment="Center"
+                                      Margin="{TemplateBinding Padding}" />
+                  </Grid>
+                </Border>
+                <ItemsPresenter Grid.Row="1"
+                                Margin="{DynamicResource TokenThicknessTreeIndent}" />
+              </Grid>
+              <ControlTemplate.Triggers>
+                <Trigger Property="HasItems" Value="False">
+                  <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource TokenBrushTreeItemHover}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                  <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource TokenBrushTreeItemSelected}" />
+                  <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+                </Trigger>
+                <Trigger SourceName="Expander" Property="IsChecked" Value="True">
+                  <Setter TargetName="ExpanderGlyph" Property="Text" Value="▼" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                  <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource TokenBrushAccentPrimary}" />
+                  <Setter TargetName="ItemBorder" Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style x:Key="SIAP.SectionHeader" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="{DynamicResource TokenFontWeightHeader}" />
+        <Setter Property="FontSize" Value="{DynamicResource TokenFontSizeSmall}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextSecondary}" />
+      </Style>
+
+      <Style x:Key="SIAP.PrimaryButton" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushGradientPrimaryAction}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+        <Setter Property="Padding" Value="{DynamicResource TokenThicknessButtonPadding}" />
+        <Setter Property="Margin" Value="{DynamicResource TokenThicknessButtonMargin}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="Button">
+              <Border x:Name="Border"
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="{DynamicResource TokenCornerRadiusButton}">
+                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  RecognizesAccessKey="True" />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter TargetName="Border" Property="Opacity" Value="{DynamicResource TokenOpacityHover}" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                  <Setter TargetName="Border" Property="Opacity" Value="{DynamicResource TokenOpacityPressed}" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                  <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource TokenBrushAccentPrimary}" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                  <Setter TargetName="Border" Property="Opacity" Value="{DynamicResource TokenOpacityDisabled}" />
+                  <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextDisabled}" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style x:Key="SIAP.SecondaryButton" TargetType="Button" BasedOn="{StaticResource SIAP.PrimaryButton}">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushGradientSecondaryAction}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+      </Style>
+
+      <Style x:Key="SIAP.DangerButton" TargetType="Button" BasedOn="{StaticResource SIAP.PrimaryButton}">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushGradientDangerAction}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushAccentError}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+      </Style>
+
+      <Style x:Key="SIAP.Panel" TargetType="GroupBox">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushGradientSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+        <Setter Property="Foreground" Value="{DynamicResource TokenBrushTextPrimary}" />
+        <Setter Property="Padding" Value="{DynamicResource TokenThicknessPanelPadding}" />
+        <Setter Property="HeaderTemplate">
+          <Setter.Value>
+            <DataTemplate>
+              <TextBlock Text="{Binding}" Style="{StaticResource SIAP.SectionHeader}" />
+            </DataTemplate>
+          </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="GroupBox">
+              <Border Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="{DynamicResource TokenCornerRadiusPanel}">
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                  </Grid.RowDefinitions>
+                  <ContentPresenter ContentSource="Header"
+                                    Margin="{DynamicResource TokenThicknessSmall}"
+                                    RecognizesAccessKey="True" />
+                  <ContentPresenter Grid.Row="1"
+                                    Margin="{DynamicResource TokenThicknessSmall}" />
+                </Grid>
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style x:Key="SIAP.Card" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource TokenBrushGradientSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TokenBrushBorderStandard}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TokenBorderThicknessStandard}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource TokenCornerRadiusCard}" />
+        <Setter Property="Padding" Value="{DynamicResource TokenThicknessHeaderPadding}" />
+      </Style>
+    </ResourceDictionary>
   </Application.Resources>
 </Application>
