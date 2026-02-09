@@ -4,6 +4,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAP.Core", "SIAP.Core\\SIAP.Core.csproj", "{90D7854F-28DA-4699-B0CA-8CFB2855598E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAP.App", "SIAP.App\\SIAP.App.csproj", "{546481FD-DAD3-47C4-A118-F529B384CEA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,5 +16,9 @@ Global
 		{90D7854F-28DA-4699-B0CA-8CFB2855598E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90D7854F-28DA-4699-B0CA-8CFB2855598E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D7854F-28DA-4699-B0CA-8CFB2855598E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{546481FD-DAD3-47C4-A118-F529B384CEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{546481FD-DAD3-47C4-A118-F529B384CEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{546481FD-DAD3-47C4-A118-F529B384CEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{546481FD-DAD3-47C4-A118-F529B384CEA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
